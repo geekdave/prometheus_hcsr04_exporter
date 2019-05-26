@@ -1,0 +1,32 @@
+{
+  "name": "prometheus_hcsr04_exporter",
+  "version": "0.0.1",
+  "description": "Monitor a Raspberry Pi / HC-SR04 Ultrasonic Rangefinder Distance with Prometheus",
+  "main": "exporter.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/geekdave/prometheus_hcsr04_exporter.git"
+  },
+  "keywords": [
+    "prometheus",
+    "hc-sr04",
+    "rangefinder"
+  ],
+  "optionalDependencies": {
+    "pigpio": "1.2.1"
+  },
+  "dependencies": {
+    "express": "^4.16.4",
+    "prom-client": "^11.3.0",
+    "yargs": "^13.2.1"
+  },
+  "author": "Dave Cadwallader",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/geekdave/prometheus_hcsr04_exporter/issues"
+  },
+  "homepage": "https://github.com/geekdave/prometheus_hcsr04_exporter#readme"
+}
