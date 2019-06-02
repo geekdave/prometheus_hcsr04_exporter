@@ -11,14 +11,17 @@ const express = require("express");
 
 const metricsServer = express();
 const gauge = new prometheus.Gauge({
-  name: "distance_to_garage_door_cm",
-  help: "How far away the garage door is in cm"
+  name: "distance_cm",
+  help: "Distance from sensor to nearest object in cm"
 });
 const up = new prometheus.Gauge({ name: "up", help: "UP Status" });
 
 // The number of microseconds it takes sound to travel 1cm at 20 degrees celcius
+// TODO: Allow configuring via parameter
 const MICROSECONDS_PER_CM = 1e6 / 34321;
 
+// GPIO Output Pin
+// TODO: Allow configuring via parameter
 const trigger = new Gpio(23, { mode: Gpio.OUTPUT });
 
 trigger.digitalWrite(0); // Make sure trigger is low
@@ -44,6 +47,9 @@ function startServer() {
   });
 
   console.log("Server listening to 9207, metrics exposed on /metrics endpoint");
+
+  // Port to listen on
+  // TODO: Allow configuring via parameter
   metricsServer.listen(9207);
 }
 
@@ -51,6 +57,9 @@ const getValue = async () => {
   let startTick;
 
   trigger.trigger(10, 1); // Set trigger high for 10 microseconds
+
+  // GPIO input pin
+  // TODO: Allow configuring via parameter
   const echo = new Gpio(24, { mode: Gpio.INPUT, alert: true });
 
   var timeoutPromise = new Promise(function(resolve, reject) {
