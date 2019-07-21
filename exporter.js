@@ -53,6 +53,8 @@ function startServer() {
   metricsServer.listen(9207);
 }
 
+var timeoutId = null;
+
 const getValue = async () => {
   let startTick;
 
@@ -63,13 +65,17 @@ const getValue = async () => {
   const echo = new Gpio(24, { mode: Gpio.INPUT, alert: true });
 
   var timeoutPromise = new Promise(function(resolve, reject) {
-    setTimeout(function() {
-      console.log("Timed out!");
-      resolve(999);
+    timeoutId = setTimeout(function() {
+      if (timeoutId) {
+        console.log("Timed out!");
+        resolve(999);
+      }
     }, 50);
   });
 
   var sensorPromise = new Promise((resolve, reject) => {
+    timeoutId = null;
+
     echo.on("alert", (level, tick) => {
       if (level == 1) {
         startTick = tick;

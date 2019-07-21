@@ -1,0 +1,12 @@
+version: '3'
+services:
+  distance-sensor:
+    image: geekdave/prometheus_hcsr04_exporter:v0.0.2
+    user: root
+    ports:
+      - 9207:9207
+    cap_add:
+      - SYS_RAWIO
+    devices:
+      - /dev/mem
+      - /dev/vcio
