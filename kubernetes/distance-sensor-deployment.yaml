@@ -1,32 +1,30 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  annotations:
-    kompose.cmd: kompose convert
-    kompose.version: 1.18.0 (06a2e56)
-  creationTimestamp: null
-  labels:
-    io.kompose.service: distance-sensor
   name: distance-sensor
+  labels:
+    app: distance-sensor
 spec:
   replicas: 1
-  strategy: {}
+  selector:
+    matchLabels:
+      app: distance-sensor
   template:
     metadata:
-      creationTimestamp: null
       labels:
-        io.kompose.service: distance-sensor
+        app: distance-sensor
     spec:
       containers:
       - image: geekdave/prometheus_hcsr04_exporter:v0.0.2
         name: distance-sensor
         ports:
         - containerPort: 9207
-        resources: {}
+          protocol: TCP
         securityContext:
           privileged: true
           capabilities:
             add:
             - SYS_RAWIO
       restartPolicy: Always
-status: {}
+      nodeSelector:
+        region: garage
